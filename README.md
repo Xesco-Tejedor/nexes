@@ -1,43 +1,38 @@
 # Nexes
 
-Buscador guiado de contactos profesionales en fuentes públicas, para archivos, bibliotecas, museos, editoriales y preservación digital. Interfaz en español, diseño ámbar, HTML/CSS/JavaScript sin dependencias.
+[Abrir Nexes](https://xesco-tejedor.github.io/nexes/)
 
-## Cómo se usa
+Consultas guiadas de contactos profesionales en fuentes públicas. No rastrea redes, no verifica identidades automáticamente, no contacta con nadie y no encuentra información privada. Se mantienen LinkedIn indexado, webs institucionales, ORCID, Dialnet, Zenodo y GitHub como rutas al buscador elegido.
 
-1. Define nombre, especialidad, institución y lugar. Puedes acotar un dominio institucional o excluir palabras.
-2. Prepara consultas separadas para LinkedIn, webs institucionales, ORCID, Dialnet, Zenodo y GitHub.
-3. Abre una ruta en Google o Bing, consulta la página original y contrasta la identidad con otra fuente.
-4. Guarda manualmente una pista con URL, institución, evidencia y estado de revisión.
+## Continuidad entre equipos
 
-## Qué aporta
+Búsqueda, filtro, borrador sin guardar y pistas se conservan localmente. La conexión opcional con Google Drive guarda y recupera el espacio de trabajo en una carpeta privada Nexes. Usa la misma cuenta en cada navegador y espera a **Copia en Drive confirmada** antes de cambiar de equipo.
 
-Evita reconstruir la misma búsqueda en cada fuente, muestra la consulta antes de abrirla y ayuda a contrastar y organizar pistas. No promete más cobertura ni resultados mejores que un buscador; no tiene índice propio ni IA. Bing documenta un límite de los primeros 10 términos de búsqueda: conviene mantener las consultas cortas.
+El código web es público; los datos de trabajo no se suben a GitHub ni se comparten. `drive.file` limita el permiso a archivos creados o autorizados para esta app. Tokens solo en memoria, sin contraseña ni intermediario. Se necesita reconectar al abrir la app o caducar la autorización. No hay guardado con la app cerrada. Sin conexión se mantiene el trabajo local, pendiente de sincronizar al reconectar.
+
+Cambios simultáneos se conservan mediante registros causales con múltiples versiones. Revisa y recupera alternativas en **Versiones para revisar**. Si sigues editando, las alternativas concurrentes se conservan en el historial local y en copias inmutables de Drive. Las eliminaciones se sincronizan, pero permanecen en copias anteriores. Desconectar no elimina datos. Copias completas exportables e importación que combina sin borrar cambios concurrentes. El JSON/CSV tradicional exporta solo las pistas visibles; el JSON antiguo sigue importándose sin sustituir la lista.
+
+Las pistas anteriores se migran sin borrar el original `nexes.contacts.v1`; se guarda también una copia previa. Si hay almacenamiento ilegible o lleno, se detiene la escritura y se ofrece copia de rescate en vez de sobreescribir datos.
 
 ## Privacidad y límites
 
-- No hay servidor de datos, claves, analítica, scraping ni automatización de sesiones.
-- No se envían consultas mientras escribes. Al abrir un enlace de búsqueda, la consulta se transmite al buscador elegido.
-- La lista se guarda en `localStorage` de este navegador. No está cifrada ni sincronizada. No uses dispositivos compartidos para guardar datos que no quieras que otros lean.
-- Exportación JSON/CSV e importación JSON con validación y deduplicación por URL. Los archivos exportados pueden contener datos personales: no los subas a este repositorio.
-- No guardar domicilios, teléfonos privados, datos sensibles ni perfiles de personas privadas. Solo información profesional pública necesaria para el propósito.
-- Coincidencia de nombre no significa identidad confirmada. El estado «Identidad contrastada» lo elige el usuario, no lo certifica la app.
-- El acceso a redes y fuentes puede requerir cuenta o estar limitado. No se sortean controles. Dialnet tiene funciones Plus; se consultan solo páginas indexadas. LinkedIn se consulta desde el índice del buscador, sin extraer ni reproducir perfiles.
-- Ninguna operación de esta app envía mensajes a los contactos.
+[Política de privacidad](https://xesco-tejedor.github.io/nexes/privacy.html). Copia local sin cifrado: no usar equipos compartidos para información privada. Solo información profesional pública necesaria; no domicilios, teléfonos privados, datos sensibles ni perfiles de personas privadas. Abrir una consulta la transmite al buscador. Drive opcional transmite a Google la búsqueda, el borrador y las pistas. No hay analítica ni usos secundarios.
 
-## Fuentes de diseño de consultas
+No se activa facturación ni se incluyen servicios de pago. Las copias ocupan espacio del Drive del usuario. Las cuotas y condiciones de Google pueden cambiar. Errores de red, cuota o autorización dejan los datos locales y muestran el problema, no simulan un guardado.
 
-Revisadas el 8 de octubre de 2026:
+## Desarrollo
+
+HTML/CSS/JS separados; `model.js` contiene la combinación causal pura. `app.js` conserva rutas y pistas; `sync.js` gestiona persistencia y Drive. Se publica como sitio estático en GitHub Pages desde `main`.
+
+Pruebas: `node test-model.cjs` comprueba adiciones, conflictos, borrado/edición, convergencia e idempotencia. `test-ui.cjs` usa Playwright con Drive simulado para migración, recarga, borrador, sincronización entre contextos, conflictos y móvil. Las pruebas simuladas no sustituyen la comprobación real de autorización/Drive.
+
+## Fuentes de consulta
 
 - https://support.google.com/websearch/answer/2466433
 - https://support.microsoft.com/en-us/bing/advanced-search-options
-- https://support.microsoft.com/en-us/bing/advanced-search-keywords
 - https://www.linkedin.com/help/linkedin/answer/a1341387
 - https://info.orcid.org/documentation/features/public-api/searching-the-registry/
 - https://dialnet.unirioja.es/
 - https://zenodo.org/
 
-No es asesoramiento legal ni garantía de disponibilidad. Se respetan las condiciones de cada fuente. No se han incluido datos reales de terceros en el código ni en el repositorio.
-
-## Ejecución y publicación
-
-Abre `index.html` con un servidor estático o activa GitHub Pages desde la rama `main`, carpeta raíz. No necesita instalación, servicios de pago ni tarjeta. Para descargar/copiar, el navegador puede pedir permiso para el portapapeles; si no lo permite, la consulta se selecciona para copiar manualmente.
+No asesoramiento legal ni garantía de cobertura. Se respetan controles y condiciones de las fuentes.
